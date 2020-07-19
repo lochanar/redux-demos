@@ -18,7 +18,7 @@ module.exports = {
     publicPath: "/", //public URL of the output dir when it's referenced from the browser
     filename: "bundle.js" //physical file won't be generated
   },
-  // You can choose to serve your app using aby node based web server like Express too
+  // You can choose to serve your app using any node based web server like Express too
   // Here we are going serve via webpack
   devServer: {
     stats: "minimal", //less log noise when running
@@ -29,6 +29,13 @@ module.exports = {
     https: false
   },
   plugins: [
+    // Now webpack will replace proces.env.API_URL anywhere in code with
+    // the URL we have specified here
+    new webpack.DefinePlugin({
+      "process.env.API_URL": JSON.stringify("http://localhost:3001")
+    }),
+    // webpack can create the index.html automatically for us using the given HTML template
+    // with an included <script> tag with its src pointing to our app.bundle.js
     new HtmlWebpackPlugin({
       template: "src/index.html",
       favicon: "src/favicon.ico"
