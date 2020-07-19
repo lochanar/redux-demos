@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 export const CoursesList = ({ courses }) => (
   <table className="table">
-    <caption>Courses</caption>
     <thead>
       <tr>
         <th />
