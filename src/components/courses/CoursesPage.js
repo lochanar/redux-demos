@@ -3,15 +3,19 @@ import { connect } from "react-redux";
 import * as courseActions from "../../redux/actions/courseActions";
 import { PropTypes } from "prop-types";
 import { bindActionCreators } from "redux";
+import CoursesList from "./CoursesList";
 
 class CoursesPage extends React.Component {
+  componentDidMount() {
+    this.props.actions.loadCourses().catch(error => {
+      alert("Error in loading courses" + error);
+    });
+  }
   render() {
     return (
       <>
         <h2>Courses</h2>
-        {this.props.courses.map(course => (
-          <div key={course.title}>{course.title}</div>
-        ))}
+        <CoursesList courses={this.props.courses} />
       </>
     );
   }
@@ -28,6 +32,7 @@ function mapStateToProps(state) {
   };
 }
 
+// We are injecting any actions declared in courseActions to our component under a prop called `actions`
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(courseActions, dispatch)
